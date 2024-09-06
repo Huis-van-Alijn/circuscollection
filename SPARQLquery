@@ -1,0 +1,15 @@
+PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?title ?label ?iiifmanifest 
+FROM <http://stad.gent/ldes/hva> 
+WHERE { 
+  ?object cidoc:P102_has_title ?title.
+  ?object cidoc:P128_carries ?carries.
+  ?carries cidoc:P129_is_about ?about.
+  ?about cidoc:P2_has_type ?type.
+  ?type skos:prefLabel ?label.
+
+       FILTER (regex(?label, "^circus$", "i"))
+  ?object cidoc:P129i_is_subject_of ?iiifmanifest .
+} 
